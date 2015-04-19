@@ -1,21 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="MainApp">
 <head>
   <title>Voting Tendencies Survey</title>
+  <%= stylesheet_link_tag :style %>
+  <%= javascript_include_tag :survey %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<h1> HELLO WORLD </h1>
-<strong> THIS IS A TEST LOL </strong>
-<div id="counter"></div>
 
-<script>
-   var counter  = 0;
-   setInterval(function() {
-     $("#counter").text(counter++);
-   }, 100);
-</script>
+<div class="main-container" ng-controller="SurveyCtrl">
+  <!-- NAME INPUT -->
+  <div class="enter-info" ng-show="surveyMode === ENTER_INFO">
+    <h1 class="title">Marcus and Dennis' Gov 1372 Survey</h1>
+    <form class="form">
+      <label>Name:</label>
+      <input type="text" class="form-control" name="name" ng-model="formData.name">
+      </br>
+      </br>
+      <label>Email:</label>
+      <input type="text" class="form-control" name="email" ng-model="formData.email">
+      </br>
+    </form>
+    <label class="msg">Your personal information will remain anonymous and confidential. We will only
+      use your personal information to enter you into a raffle for a free Amazon gift card.</label>
+    <button class="continue-button" type="button" ng-click="onNextClicked();">Continue</button>
+    <label class="warning">{{ warning }}</label>
+  </div>
+  <div class="multiple-choice" ng-show="surveyMode === ANSWER_QUESTIONS && questionMode === MULTIPLE_CHOICE">
+    <label class="question-text">{{ (questionNum + 1) + '. ' + questionText }}</label>
+    <div class="question-answer">
+      <div ng-repeat="answer in answers">
+        <input type="radio" name="answerChoices" ng-model="formData.answers[questionNum].answer" value="{{answer}}">{{ answer }}
+      </div>
+    </div>
+    <button class="continue-button" type="button" ng-click="onNextClicked();">Continue</button>
+    <label class="warning">{{ warning }}</label>
+  </div>
+  <div class="survey-done" ng-show="surveyMode === DONE">
+    <h1>Thanks for taking our survey! Your response has been recorded.</h1>
+  </div>
+  <div class="wait" ng-show="surveyMode === WAIT">
+    <h1>Loading survey questions (may take up to 5 minutes)...</h1>
+  </div>
+  <div class="reward-value" ng-show="surveyMode === REWARD_MODE">
+    <label>What do you think the fair value of the reward (an Amazon gift card) should be?</label>
+    <input type="text" class="form-control" name="rewardValue" ng-model="formData.rewardValue" placeholder="Enter dollar value">
+    <button class="continue-button" type="button" ng-click="onNextClicked();">Submit</button>
+  </div>
+</div>
 
 </body>
 </html>

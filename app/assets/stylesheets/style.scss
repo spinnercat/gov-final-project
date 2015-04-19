@@ -1,0 +1,174 @@
+.main-container {
+  .enter-info {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+
+    border: 1px solid;
+    border-color: black;
+
+    .title {
+      margin-top: 10%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .form {
+      margin-top: 5%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .continue-button {
+      position: absolute;
+
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 10%;
+    }
+
+    .warning {
+      position: absolute;
+
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 5%;
+
+      color: red;
+      font-size: 8px;
+      font-weight: bold;
+    }
+
+    .msg {
+      margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
+
+      padding-left: 10%;
+      padding-right: 10%;
+
+      color: green;
+      font-size: 10px;
+      font-weight: bold;
+    }
+  }
+
+  .survey-done {
+    position: absolute;
+
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+    width: 50%;
+    height: 50%;
+
+    border: 1px solid;
+    border-color: black;
+
+    display: table;
+
+    h1 {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+
+  .multiple-choice {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+
+    border: 1px solid;
+    border-color: black;
+
+    .question-text {
+      margin-top: 10%;
+      margin-left: auto;
+      margin-right: auto;
+
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .question-answer {
+      margin-top: 5%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .continue-button {
+      position: absolute;
+
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 10%;
+    }
+
+    .warning {
+      position: absolute;
+
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 5%;
+
+      color: red;
+      font-size: 8px;
+      font-weight: bold;
+    }
+  }
+
+  .reward-value {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+
+    border: 1px solid;
+    border-color: black;
+
+    label {
+      margin-top: 10%;
+      margin-left: auto;
+      margin-right: auto;
+
+      font-weight: bold;
+      font-size: 20px;
+
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+
+    input {
+      margin-top: 5%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    button {
+      position: absolute;
+
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 10%;
+    }
+  }
+}
