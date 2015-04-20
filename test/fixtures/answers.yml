@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  person_id: 1
+  question_id: 1
+  answer: MyString
+  start_time: 2015-04-19 16:12:39
+  end_time: 2015-04-19 16:12:39
+
+two:
+  person_id: 1
+  question_id: 1
+  answer: MyString
+  start_time: 2015-04-19 16:12:39
+  end_time: 2015-04-19 16:12:39
