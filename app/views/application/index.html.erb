@@ -45,8 +45,9 @@
   </div>
   <div class="reward-value" ng-show="surveyMode === REWARD_MODE">
     <label>What do you think the fair value of the reward (an Amazon gift card) should be?</label>
-    <input type="text" class="form-control" name="rewardValue" ng-model="formData.rewardValue" placeholder="Enter dollar value">
+    <input type="number" class="form-control" name="rewardValue" ng-model="formData.rewardValue" placeholder="Enter dollar value">
     <button class="continue-button" type="button" ng-click="onNextClicked();">Submit</button>
+    <label class="warning">{{ warning }}</label>
   </div>
 </div>
 

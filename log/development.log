@@ -3280,3 +3280,911 @@ ORDER BY c.conname
   [1m[36m (0.1ms)[0m  [1mBEGIN[0m
   [1m[35mSQL (2.0ms)[0m  INSERT INTO "people" ("created_at", "updated_at") VALUES ($1, $2) RETURNING "id"  [["created_at", "2015-04-20 03:14:01.630757"], ["updated_at", "2015-04-20 03:14:01.630757"]]
   [1m[36m (1.3ms)[0m  [1mCOMMIT[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreatePeople (20150419195616)
+  [1m[35m (0.9ms)[0m  BEGIN
+  [1m[36m (24.6ms)[0m  [1mCREATE TABLE "people" ("id" serial primary key, "name" character varying, "email" character varying, "treatment" boolean, "valuation" float, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20150419195616"]]
+  [1m[36m (1.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateAnswers (20150419201239)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (4.5ms)[0m  [1mCREATE TABLE "answers" ("id" serial primary key, "person_id" integer, "question_id" integer, "answer" character varying, "start_time" timestamp, "end_time" timestamp, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20150419201239"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (9.0ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'answers'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (7.3ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'people'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+
+
+Started GET "/" for ::1 at 2015-04-20 00:18:02 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (177.3ms)
+Completed 200 OK in 361ms (Views: 351.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/survey.self-d8bf5fcb890a77f18e1ce66127d0e21f50b2fffe83f2cc11b52dd55ce3375588.js?body=1" for ::1 at 2015-04-20 00:18:03 -0400
+
+
+Started POST "/api/person?email=dcui@college.harvard.edu&name=Dennis&treatment=1" for ::1 at 2015-04-20 00:18:13 -0400
+
+ActionController::RoutingError (No route matches [POST] "/api/person"):
+  actionpack (4.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.1.2) lib/web_console/middleware.rb:37:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.0) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.0) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/static.rb:113:in `call'
+  rack (1.6.0) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.0) lib/rails/engine.rb:518:in `call'
+  railties (4.2.0) lib/rails/application.rb:164:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  rack (1.6.0) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.0) lib/rack/handler/webrick.rb:89:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:138:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:94:in `run'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/server.rb:294:in `block in start_thread'
+
+
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/routes/_route.html.erb (1.1ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/routes/_table.html.erb (10.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (99.6ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/style.css.erb within layouts/inlined_string (1.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (1.1ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/console.js.erb within layouts/javascript (65.1ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.8ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/index.html.erb (136.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 00:19:44 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (160.1ms)
+Completed 200 OK in 307ms (Views: 297.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/survey.self-cfd051bc0772805f28bba1c60283b55bdb805da3eb796cf3f23d7d372502a300.js?body=1" for ::1 at 2015-04-20 00:19:45 -0400
+
+
+Started POST "/api/person/create?email=dcui@college.harvard.edu&name=Dennis&treatment=0" for ::1 at 2015-04-20 00:19:50 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"dcui@college.harvard.edu", "name"=>"Dennis", "treatment"=>"0"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 1ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.2.0) lib/action_controller/metal/request_forgery_protection.rb:181:in `handle_unverified_request'
+  actionpack (4.2.0) lib/action_controller/metal/request_forgery_protection.rb:209:in `handle_unverified_request'
+  actionpack (4.2.0) lib/action_controller/metal/request_forgery_protection.rb:204:in `verify_authenticity_token'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:427:in `block in make_lambda'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:163:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:163:in `block in halting'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:92:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:92:in `_run_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:734:in `_run_process_action_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.0) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.2.0) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.2.0) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.2.0) lib/active_support/notifications.rb:164:in `block in instrument'
+  activesupport (4.2.0) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.2.0) lib/active_support/notifications.rb:164:in `instrument'
+  actionpack (4.2.0) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.2.0) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.2.0) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.2.0) lib/abstract_controller/base.rb:137:in `process'
+  actionview (4.2.0) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.2.0) lib/action_controller/metal.rb:195:in `dispatch'
+  actionpack (4.2.0) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.2.0) lib/action_controller/metal.rb:236:in `block in action'
+  actionpack (4.2.0) lib/action_dispatch/routing/route_set.rb:73:in `call'
+  actionpack (4.2.0) lib/action_dispatch/routing/route_set.rb:73:in `dispatch'
+  actionpack (4.2.0) lib/action_dispatch/routing/route_set.rb:42:in `serve'
+  actionpack (4.2.0) lib/action_dispatch/journey/router.rb:43:in `block in serve'
+  actionpack (4.2.0) lib/action_dispatch/journey/router.rb:30:in `each'
+  actionpack (4.2.0) lib/action_dispatch/journey/router.rb:30:in `serve'
+  actionpack (4.2.0) lib/action_dispatch/routing/route_set.rb:802:in `call'
+  rack (1.6.0) lib/rack/etag.rb:24:in `call'
+  rack (1.6.0) lib/rack/conditionalget.rb:38:in `call'
+  rack (1.6.0) lib/rack/head.rb:13:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.0) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.0) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.0) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:647:in `call'
+  activerecord (4.2.0) lib/active_record/migration.rb:378:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:88:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:88:in `_run_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:734:in `_run_call_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.0) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.1.2) lib/web_console/middleware.rb:37:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.0) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.0) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/static.rb:113:in `call'
+  rack (1.6.0) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.0) lib/rails/engine.rb:518:in `call'
+  railties (4.2.0) lib/rails/application.rb:164:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  rack (1.6.0) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.0) lib/rack/handler/webrick.rb:89:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:138:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:94:in `run'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/server.rb:294:in `block in start_thread'
+
+
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_source.erb (13.7ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.1ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (74.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/console.js.erb within layouts/javascript (51.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/index.html.erb (118.7ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 00:20:39 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (10.6ms)
+Completed 200 OK in 70ms (Views: 69.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/api/person/create?email=dcui@college.harvard.edu&name=Dennis&treatment=1" for ::1 at 2015-04-20 00:20:46 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"dcui@college.harvard.edu", "name"=>"Dennis", "treatment"=>"1"}
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "people" ("name", "email", "treatment", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Dennis"], ["email", "dcui@college.harvard.edu"], ["treatment", "t"], ["created_at", "2015-04-20 04:20:46.549120"], ["updated_at", "2015-04-20 04:20:46.549120"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Completed 200 OK in 24ms (Views: 0.2ms | ActiveRecord: 5.1ms)
+
+
+Started POST "/api/answer/create?answer=Because+he%27s+a+fish&end_time=2015-04-20T00:21:08-04:00&person_id=3&question_id=0&start_time=2015-04-20T00:20:56-04:00" for ::1 at 2015-04-20 00:21:08 -0400
+Processing by AnswerController#create as HTML
+  Parameters: {"answer"=>"Because he's a fish", "end_time"=>"2015-04-20T00:21:08-04:00", "person_id"=>"3", "question_id"=>"0", "start_time"=>"2015-04-20T00:20:56-04:00"}
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "answers" ("person_id", "question_id", "answer", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["person_id", 3], ["question_id", 0], ["answer", "Because he's a fish"], ["start_time", "2015-04-20 04:20:56.000000"], ["end_time", "2015-04-20 04:21:08.000000"], ["created_at", "2015-04-20 04:21:08.858621"], ["updated_at", "2015-04-20 04:21:08.858621"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 19ms (Views: 0.2ms | ActiveRecord: 3.4ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 00:32:45 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (142.0ms)
+Completed 200 OK in 250ms (Views: 248.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/survey.self-ec88de201b3677c89810d0413d4c0cddd673bba1df76b0618a3c5a3e67366206.js?body=1" for ::1 at 2015-04-20 00:32:45 -0400
+
+
+Started GET "/assets/style.self-b0b94cf904ab347ce9b4e48ceffdc1291d1751b9ad7b2bb1fc97d7f8438cfe4d.css?body=1" for ::1 at 2015-04-20 00:32:45 -0400
+
+
+Started POST "/api/person/create?email=dcui@college.harvard.edu&name=Dennis&treatment=1" for ::1 at 2015-04-20 00:32:55 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"dcui@college.harvard.edu", "name"=>"Dennis", "treatment"=>"1"}
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "people" ("name", "email", "treatment", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Dennis"], ["email", "dcui@college.harvard.edu"], ["treatment", "t"], ["created_at", "2015-04-20 04:32:55.920944"], ["updated_at", "2015-04-20 04:32:55.920944"]]
+  [1m[35m (2.3ms)[0m  COMMIT
+Completed 200 OK in 18ms (Views: 0.2ms | ActiveRecord: 6.2ms)
+
+
+Started POST "/api/person/update_valuation?id=4&valuation=2.5" for ::1 at 2015-04-20 00:33:37 -0400
+Processing by PersonController#update_valuation as HTML
+  Parameters: {"id"=>"4", "valuation"=>"2.5"}
+  [1m[36mPerson Load (0.5ms)[0m  [1mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT 1[0m  [["id", 4]]
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mUPDATE "people" SET "valuation" = $1, "updated_at" = $2 WHERE "people"."id" = $3[0m  [["valuation", 2.5], ["updated_at", "2015-04-20 04:33:37.409840"], ["id", 4]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Completed 500 Internal Server Error in 22ms
+
+ActionView::MissingTemplate (Missing template person/update_valuation, application/update_valuation with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/Users/denniscui/Dropbox/Gov1372/gov-final-project/app/views"
+):
+  actionview (4.2.0) lib/action_view/path_set.rb:46:in `find'
+  actionview (4.2.0) lib/action_view/lookup_context.rb:121:in `find'
+  actionview (4.2.0) lib/action_view/renderer/abstract_renderer.rb:18:in `find_template'
+  actionview (4.2.0) lib/action_view/renderer/template_renderer.rb:40:in `determine_template'
+  actionview (4.2.0) lib/action_view/renderer/template_renderer.rb:8:in `render'
+  actionview (4.2.0) lib/action_view/renderer/renderer.rb:42:in `render_template'
+  actionview (4.2.0) lib/action_view/renderer/renderer.rb:23:in `render'
+  actionview (4.2.0) lib/action_view/rendering.rb:100:in `_render_template'
+  actionpack (4.2.0) lib/action_controller/metal/streaming.rb:217:in `_render_template'
+  actionview (4.2.0) lib/action_view/rendering.rb:83:in `render_to_body'
+  actionpack (4.2.0) lib/action_controller/metal/rendering.rb:32:in `render_to_body'
+  actionpack (4.2.0) lib/action_controller/metal/renderers.rb:37:in `render_to_body'
+  actionpack (4.2.0) lib/abstract_controller/rendering.rb:25:in `render'
+  actionpack (4.2.0) lib/action_controller/metal/rendering.rb:16:in `render'
+  actionpack (4.2.0) lib/action_controller/metal/instrumentation.rb:41:in `block (2 levels) in render'
+  activesupport (4.2.0) lib/active_support/core_ext/benchmark.rb:12:in `block in ms'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/benchmark.rb:303:in `realtime'
+  activesupport (4.2.0) lib/active_support/core_ext/benchmark.rb:12:in `ms'
+  actionpack (4.2.0) lib/action_controller/metal/instrumentation.rb:41:in `block in render'
+  actionpack (4.2.0) lib/action_controller/metal/instrumentation.rb:84:in `cleanup_view_runtime'
+  activerecord (4.2.0) lib/active_record/railties/controller_runtime.rb:25:in `cleanup_view_runtime'
+  actionpack (4.2.0) lib/action_controller/metal/instrumentation.rb:40:in `render'
+  actionpack (4.2.0) lib/action_controller/metal/implicit_render.rb:10:in `default_render'
+  actionpack (4.2.0) lib/action_controller/metal/implicit_render.rb:5:in `send_action'
+  actionpack (4.2.0) lib/abstract_controller/base.rb:198:in `process_action'
+  actionpack (4.2.0) lib/action_controller/metal/rendering.rb:10:in `process_action'
+  actionpack (4.2.0) lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:117:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:117:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:234:in `block in halting'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:234:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:234:in `block in halting'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:169:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:169:in `block in halting'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:169:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:169:in `block in halting'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:92:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:92:in `_run_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:734:in `_run_process_action_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.0) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.2.0) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.2.0) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.2.0) lib/active_support/notifications.rb:164:in `block in instrument'
+  activesupport (4.2.0) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.2.0) lib/active_support/notifications.rb:164:in `instrument'
+  actionpack (4.2.0) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.2.0) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.2.0) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.2.0) lib/abstract_controller/base.rb:137:in `process'
+  actionview (4.2.0) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.2.0) lib/action_controller/metal.rb:195:in `dispatch'
+  actionpack (4.2.0) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.2.0) lib/action_controller/metal.rb:236:in `block in action'
+  actionpack (4.2.0) lib/action_dispatch/routing/route_set.rb:73:in `call'
+  actionpack (4.2.0) lib/action_dispatch/routing/route_set.rb:73:in `dispatch'
+  actionpack (4.2.0) lib/action_dispatch/routing/route_set.rb:42:in `serve'
+  actionpack (4.2.0) lib/action_dispatch/journey/router.rb:43:in `block in serve'
+  actionpack (4.2.0) lib/action_dispatch/journey/router.rb:30:in `each'
+  actionpack (4.2.0) lib/action_dispatch/journey/router.rb:30:in `serve'
+  actionpack (4.2.0) lib/action_dispatch/routing/route_set.rb:802:in `call'
+  rack (1.6.0) lib/rack/etag.rb:24:in `call'
+  rack (1.6.0) lib/rack/conditionalget.rb:38:in `call'
+  rack (1.6.0) lib/rack/head.rb:13:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.0) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.0) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.0) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:647:in `call'
+  activerecord (4.2.0) lib/active_record/migration.rb:378:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:88:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:88:in `_run_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:734:in `_run_call_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.0) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.1.2) lib/web_console/middleware.rb:37:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.0) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.0) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/static.rb:113:in `call'
+  rack (1.6.0) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.0) lib/rails/engine.rb:518:in `call'
+  railties (4.2.0) lib/rails/application.rb:164:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  rack (1.6.0) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.0) lib/rack/handler/webrick.rb:89:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:138:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:94:in `run'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/server.rb:294:in `block in start_thread'
+
+
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_source.erb (6.8ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.1ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.2ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/missing_template.html.erb within rescues/layout (60.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/console.js.erb within layouts/javascript (51.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/index.html.erb (116.7ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 00:36:33 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (9.3ms)
+Completed 200 OK in 65ms (Views: 63.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/api/person/create?email=dcui@college.harvard.edu&name=Dennis&treatment=0" for ::1 at 2015-04-20 00:36:42 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"dcui@college.harvard.edu", "name"=>"Dennis", "treatment"=>"0"}
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "people" ("name", "email", "treatment", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["name", "Dennis"], ["email", "dcui@college.harvard.edu"], ["treatment", "f"], ["created_at", "2015-04-20 04:36:42.876825"], ["updated_at", "2015-04-20 04:36:42.876825"]]
+  [1m[36m (2.5ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 14ms (Views: 0.3ms | ActiveRecord: 5.3ms)
+
+
+Started POST "/api/answer/create?answer=I%27m+not+sure.&end_time=2015-04-20T00:36:58-04:00&person_id=5&question_id=0&start_time=2015-04-20T00:36:42-04:00" for ::1 at 2015-04-20 00:36:58 -0400
+Processing by AnswerController#create as HTML
+  Parameters: {"answer"=>"I'm not sure.", "end_time"=>"2015-04-20T00:36:58-04:00", "person_id"=>"5", "question_id"=>"0", "start_time"=>"2015-04-20T00:36:42-04:00"}
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "answers" ("person_id", "question_id", "answer", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["person_id", 5], ["question_id", 0], ["answer", "I'm not sure."], ["start_time", "2015-04-20 04:36:42.000000"], ["end_time", "2015-04-20 04:36:58.000000"], ["created_at", "2015-04-20 04:36:58.476992"], ["updated_at", "2015-04-20 04:36:58.476992"]]
+  [1m[35m (1.8ms)[0m  COMMIT
+Completed 200 OK in 12ms (Views: 0.2ms | ActiveRecord: 3.8ms)
+
+
+Started POST "/api/person/update_valuation?id=5&valuation=5.2" for ::1 at 2015-04-20 00:37:03 -0400
+Processing by PersonController#update_valuation as HTML
+  Parameters: {"id"=>"5", "valuation"=>"5.2"}
+  [1m[36mPerson Load (0.4ms)[0m  [1mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT 1[0m  [["id", 5]]
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mUPDATE "people" SET "valuation" = $1, "updated_at" = $2 WHERE "people"."id" = $3[0m  [["valuation", 5.2], ["updated_at", "2015-04-20 04:37:03.807557"], ["id", 5]]
+  [1m[35m (2.2ms)[0m  COMMIT
+Completed 200 OK in 13ms (Views: 0.1ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 00:37:19 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (7.6ms)
+Completed 200 OK in 68ms (Views: 66.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 02:07:36 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (32.4ms)
+Completed 200 OK in 86ms (Views: 85.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/survey.self-01a552fd19ed864aa985c60db392cd4542c8b4fd9ebb726b75aa6089164f9ae7.js?body=1" for ::1 at 2015-04-20 02:07:36 -0400
+
+
+Started POST "/api/person/create?email=mschorow@college.harvard.edu&name=Marcus&treatment=0" for ::1 at 2015-04-20 02:07:49 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"mschorow@college.harvard.edu", "name"=>"Marcus", "treatment"=>"0"}
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "people" ("name", "email", "treatment", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["name", "Marcus"], ["email", "mschorow@college.harvard.edu"], ["treatment", "f"], ["created_at", "2015-04-20 06:07:49.954538"], ["updated_at", "2015-04-20 06:07:49.954538"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 1.1ms)
+
+
+Started POST "/api/answer/create?answer=I%27m+not+sure.&end_time=2015-04-20T02:07:55-04:00&person_id=6&question_id=0&start_time=2015-04-20T02:07:49-04:00" for ::1 at 2015-04-20 02:07:55 -0400
+Processing by AnswerController#create as HTML
+  Parameters: {"answer"=>"I'm not sure.", "end_time"=>"2015-04-20T02:07:55-04:00", "person_id"=>"6", "question_id"=>"0", "start_time"=>"2015-04-20T02:07:49-04:00"}
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "answers" ("person_id", "question_id", "answer", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["person_id", 6], ["question_id", 0], ["answer", "I'm not sure."], ["start_time", "2015-04-20 06:07:49.000000"], ["end_time", "2015-04-20 06:07:55.000000"], ["created_at", "2015-04-20 06:07:55.265309"], ["updated_at", "2015-04-20 06:07:55.265309"]]
+  [1m[35m (1.7ms)[0m  COMMIT
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 2.2ms)
+
+
+Started POST "/api/answer/create?answer=I%27m+not+sure.&end_time=2015-04-20T02:07:57-04:00&person_id=6&question_id=1&start_time=2015-04-20T02:07:49-04:00" for ::1 at 2015-04-20 02:07:57 -0400
+Processing by AnswerController#create as HTML
+  Parameters: {"answer"=>"I'm not sure.", "end_time"=>"2015-04-20T02:07:57-04:00", "person_id"=>"6", "question_id"=>"1", "start_time"=>"2015-04-20T02:07:49-04:00"}
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "answers" ("person_id", "question_id", "answer", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["person_id", 6], ["question_id", 1], ["answer", "I'm not sure."], ["start_time", "2015-04-20 06:07:49.000000"], ["end_time", "2015-04-20 06:07:57.000000"], ["created_at", "2015-04-20 06:07:57.851740"], ["updated_at", "2015-04-20 06:07:57.851740"]]
+  [1m[36m (2.3ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 2.8ms)
+
+
+Started POST "/api/answer/create?answer=I%27m+not+sure.&end_time=2015-04-20T02:08:01-04:00&person_id=6&question_id=2&start_time=2015-04-20T02:07:49-04:00" for ::1 at 2015-04-20 02:08:01 -0400
+Processing by AnswerController#create as HTML
+  Parameters: {"answer"=>"I'm not sure.", "end_time"=>"2015-04-20T02:08:01-04:00", "person_id"=>"6", "question_id"=>"2", "start_time"=>"2015-04-20T02:07:49-04:00"}
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "answers" ("person_id", "question_id", "answer", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["person_id", 6], ["question_id", 2], ["answer", "I'm not sure."], ["start_time", "2015-04-20 06:07:49.000000"], ["end_time", "2015-04-20 06:08:01.000000"], ["created_at", "2015-04-20 06:08:01.427380"], ["updated_at", "2015-04-20 06:08:01.427380"]]
+  [1m[35m (2.4ms)[0m  COMMIT
+Completed 200 OK in 7ms (Views: 0.2ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 02:09:57 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (13.2ms)
+Completed 200 OK in 87ms (Views: 86.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/api/person/create?email=dennis@bigdataboxoffice.com&name=De&treatment=1" for ::1 at 2015-04-20 02:10:33 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"dennis@bigdataboxoffice.com", "name"=>"De", "treatment"=>"1"}
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "people" ("name", "email", "treatment", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["name", "De"], ["email", "dennis@bigdataboxoffice.com"], ["treatment", "t"], ["created_at", "2015-04-20 06:10:33.098714"], ["updated_at", "2015-04-20 06:10:33.098714"]]
+  [1m[36m (1.8ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 2.3ms)
+
+
+Started POST "/api/answer/create?answer=I%27m+not+sure.&end_time=2015-04-20T02:11:12-04:00&person_id=7&question_id=0&start_time=2015-04-20T02:10:43-04:00" for ::1 at 2015-04-20 02:11:37 -0400
+Processing by AnswerController#create as HTML
+  Parameters: {"answer"=>"I'm not sure.", "end_time"=>"2015-04-20T02:11:12-04:00", "person_id"=>"7", "question_id"=>"0", "start_time"=>"2015-04-20T02:10:43-04:00"}
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "answers" ("person_id", "question_id", "answer", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["person_id", 7], ["question_id", 0], ["answer", "I'm not sure."], ["start_time", "2015-04-20 06:10:43.000000"], ["end_time", "2015-04-20 06:11:12.000000"], ["created_at", "2015-04-20 06:11:37.613529"], ["updated_at", "2015-04-20 06:11:37.613529"]]
+  [1m[35m (1.7ms)[0m  COMMIT
+Completed 200 OK in 6ms (Views: 0.1ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 02:12:46 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (51.4ms)
+Completed 200 OK in 112ms (Views: 112.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/survey.self-2b1a7288fd7f5c7d352a61c0f5751570a35edce72b191ac2f68e5b3d11e18a24.js?body=1" for ::1 at 2015-04-20 02:12:46 -0400
+
+
+Started GET "/" for ::1 at 2015-04-20 02:16:43 -0400
+
+PG::ConnectionBad (could not connect to server: No such file or directory
+	Is the server running locally and accepting
+	connections on Unix domain socket "/tmp/.s.PGSQL.5432"?
+):
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:651:in `initialize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:651:in `new'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:651:in `connect'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:242:in `initialize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:44:in `new'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:44:in `postgresql_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:436:in `new_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:446:in `checkout_new_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:422:in `acquire_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:349:in `block in checkout'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/monitor.rb:211:in `mon_synchronize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:348:in `checkout'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:263:in `block in connection'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/monitor.rb:211:in `mon_synchronize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:262:in `connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:565:in `retrieve_connection'
+  activerecord (4.2.0) lib/active_record/connection_handling.rb:113:in `retrieve_connection'
+  activerecord (4.2.0) lib/active_record/connection_handling.rb:87:in `connection'
+  activerecord (4.2.0) lib/active_record/migration.rb:384:in `connection'
+  activerecord (4.2.0) lib/active_record/migration.rb:371:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:88:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:88:in `_run_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:734:in `_run_call_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.0) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.1.2) lib/web_console/middleware.rb:37:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.0) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.0) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/static.rb:113:in `call'
+  rack (1.6.0) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.0) lib/rails/engine.rb:518:in `call'
+  railties (4.2.0) lib/rails/application.rb:164:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  rack (1.6.0) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.0) lib/rack/handler/webrick.rb:89:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:138:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:94:in `run'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/server.rb:294:in `block in start_thread'
+
+
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_source.erb (7.2ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (126.9ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.7ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/console.js.erb within layouts/javascript (93.1ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.7ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/index.html.erb (213.4ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 02:16:44 -0400
+
+PG::ConnectionBad (could not connect to server: No such file or directory
+	Is the server running locally and accepting
+	connections on Unix domain socket "/tmp/.s.PGSQL.5432"?
+):
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:651:in `initialize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:651:in `new'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:651:in `connect'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:242:in `initialize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:44:in `new'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:44:in `postgresql_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:436:in `new_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:446:in `checkout_new_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:422:in `acquire_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:349:in `block in checkout'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/monitor.rb:211:in `mon_synchronize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:348:in `checkout'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:263:in `block in connection'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/monitor.rb:211:in `mon_synchronize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:262:in `connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:565:in `retrieve_connection'
+  activerecord (4.2.0) lib/active_record/connection_handling.rb:113:in `retrieve_connection'
+  activerecord (4.2.0) lib/active_record/connection_handling.rb:87:in `connection'
+  activerecord (4.2.0) lib/active_record/migration.rb:384:in `connection'
+  activerecord (4.2.0) lib/active_record/migration.rb:371:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:88:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:88:in `_run_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:734:in `_run_call_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.0) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.1.2) lib/web_console/middleware.rb:37:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.0) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.0) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/static.rb:113:in `call'
+  rack (1.6.0) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.0) lib/rails/engine.rb:518:in `call'
+  railties (4.2.0) lib/rails/application.rb:164:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  rack (1.6.0) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.0) lib/rack/handler/webrick.rb:89:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:138:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:94:in `run'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/server.rb:294:in `block in start_thread'
+
+
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_source.erb (8.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.3ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (106.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/console.js.erb within layouts/javascript (86.8ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.9ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/index.html.erb (191.5ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 02:16:47 -0400
+
+PG::ConnectionBad (could not connect to server: No such file or directory
+	Is the server running locally and accepting
+	connections on Unix domain socket "/tmp/.s.PGSQL.5432"?
+):
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:651:in `initialize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:651:in `new'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:651:in `connect'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:242:in `initialize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:44:in `new'
+  activerecord (4.2.0) lib/active_record/connection_adapters/postgresql_adapter.rb:44:in `postgresql_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:436:in `new_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:446:in `checkout_new_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:422:in `acquire_connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:349:in `block in checkout'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/monitor.rb:211:in `mon_synchronize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:348:in `checkout'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:263:in `block in connection'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/monitor.rb:211:in `mon_synchronize'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:262:in `connection'
+  activerecord (4.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:565:in `retrieve_connection'
+  activerecord (4.2.0) lib/active_record/connection_handling.rb:113:in `retrieve_connection'
+  activerecord (4.2.0) lib/active_record/connection_handling.rb:87:in `connection'
+  activerecord (4.2.0) lib/active_record/migration.rb:384:in `connection'
+  activerecord (4.2.0) lib/active_record/migration.rb:371:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:88:in `call'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:88:in `_run_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:734:in `_run_call_callbacks'
+  activesupport (4.2.0) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.0) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.1.2) lib/web_console/middleware.rb:37:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.0) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.0) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.0) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.0) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.0) lib/action_dispatch/middleware/static.rb:113:in `call'
+  rack (1.6.0) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.0) lib/rails/engine.rb:518:in `call'
+  railties (4.2.0) lib/rails/application.rb:164:in `call'
+  rack (1.6.0) lib/rack/lock.rb:17:in `call'
+  rack (1.6.0) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.0) lib/rack/handler/webrick.rb:89:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:138:in `service'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/httpserver.rb:94:in `run'
+  /Users/denniscui/.rvm/rubies/ruby-2.2.0/lib/ruby/2.2.0/webrick/server.rb:294:in `block in start_thread'
+
+
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_source.erb (7.8ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.8ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/actionpack-4.2.0/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (112.7ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/console.js.erb within layouts/javascript (89.2ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.7ms)
+  Rendered /Users/denniscui/.rvm/gems/ruby-2.2.0/gems/web-console-2.1.2/lib/web_console/templates/index.html.erb (195.1ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 02:17:24 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (3.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (165.2ms)
+Completed 200 OK in 329ms (Views: 314.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2015-04-20 02:17:24 -0400
+
+
+Started GET "/assets/vendor/jquery-2.1.1.min.self-cdd78b0dc506b751b442bb5e5298ea658af2ee55e46ccb88ba5583570ca686e2.js?body=1" for ::1 at 2015-04-20 02:17:24 -0400
+
+
+Started GET "/assets/vendor/angular-touch-1.3.9.min.self-d73c04a74bcc0c6090c9d1a003c58fc378a4a3a3e6c5f8afd310eaace1720cbe.js?body=1" for ::1 at 2015-04-20 02:17:24 -0400
+
+
+Started GET "/assets/vendor/angular-animate-1.3.9.min.self-32e1a4ecfc00e371527c44b38416c39187ba7751b19f3f8d838f60c92d4387df.js?body=1" for ::1 at 2015-04-20 02:17:24 -0400
+
+
+Started GET "/assets/vendor/angular-1.3.9.min.self-9519bceee67d07085ced348c6961daed2adf47ff68018cb2a821c94268d5d67f.js?body=1" for ::1 at 2015-04-20 02:17:24 -0400
+
+
+Started GET "/assets/style.self-b0b94cf904ab347ce9b4e48ceffdc1291d1751b9ad7b2bb1fc97d7f8438cfe4d.css?body=1" for ::1 at 2015-04-20 02:17:24 -0400
+
+
+Started GET "/assets/vendor/angular-local-storage-0.1.5.min.self-9ca5a9a6bf93ab4b75f0da8d9b245ed2bc5a0b7ae306f417b30f6273ab5c87ca.js?body=1" for ::1 at 2015-04-20 02:17:25 -0400
+
+
+Started GET "/assets/vendor/angular-route-1.3.9.min.self-037097af6e14b37694dd0a0c6ee12a9c294e234663c2dfa36c37453d2077db87.js?body=1" for ::1 at 2015-04-20 02:17:25 -0400
+
+
+Started GET "/assets/vendor/bootstrap-3.3.1.min.self-f2d64b74536a49f843b022431e37325973468a71c9b362343deb0b6c582e5ba0.js?body=1" for ::1 at 2015-04-20 02:17:25 -0400
+
+
+Started GET "/assets/vendor/d3.min.self-4276f53af9a7dc655d1367aa558175f9d57cc2ff328ddffb8c196f4ff97cfaf6.js?body=1" for ::1 at 2015-04-20 02:17:25 -0400
+
+
+Started GET "/assets/vendor/underscore-1.7.0-min.self-466d611bb9379c845d92c674e691596ac93f1afca9d648680c5819039b662dfa.js?body=1" for ::1 at 2015-04-20 02:17:25 -0400
+
+
+Started GET "/assets/vendor/moment-2.8.4.min.self-8f9694fabf5874416d99ba1d727e5b3bc300098027c6c922480513859a6c00e8.js?body=1" for ::1 at 2015-04-20 02:17:25 -0400
+
+
+Started GET "/assets/application.self-47c20a58e76faafab860fe8a53fc0bd3b95f2fe6ae2f1a2544e79143925c9403.js?body=1" for ::1 at 2015-04-20 02:17:25 -0400
+
+
+Started GET "/assets/survey.self-2b1a7288fd7f5c7d352a61c0f5751570a35edce72b191ac2f68e5b3d11e18a24.js?body=1" for ::1 at 2015-04-20 02:17:25 -0400
+
+
+Started POST "/api/person/create?email=dcui@college.harvard.edu&name=Dennis&treatment=0" for ::1 at 2015-04-20 02:17:33 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"dcui@college.harvard.edu", "name"=>"Dennis", "treatment"=>"0"}
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36mSQL (5.1ms)[0m  [1mINSERT INTO "people" ("name", "email", "treatment", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Dennis"], ["email", "dcui@college.harvard.edu"], ["treatment", "f"], ["created_at", "2015-04-20 06:17:33.721850"], ["updated_at", "2015-04-20 06:17:33.721850"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+Completed 200 OK in 53ms (Views: 0.2ms | ActiveRecord: 20.0ms)
+
+
+Started POST "/api/answer/create?answer=I%27m+not+sure.&end_time=2015-04-20T02:17:36-04:00&person_id=8&question_id=0&start_time=2015-04-20T02:17:33-04:00" for ::1 at 2015-04-20 02:17:36 -0400
+Processing by AnswerController#create as HTML
+  Parameters: {"answer"=>"I'm not sure.", "end_time"=>"2015-04-20T02:17:36-04:00", "person_id"=>"8", "question_id"=>"0", "start_time"=>"2015-04-20T02:17:33-04:00"}
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.8ms)[0m  INSERT INTO "answers" ("person_id", "question_id", "answer", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["person_id", 8], ["question_id", 0], ["answer", "I'm not sure."], ["start_time", "2015-04-20 06:17:33.000000"], ["end_time", "2015-04-20 06:17:36.000000"], ["created_at", "2015-04-20 06:17:36.859585"], ["updated_at", "2015-04-20 06:17:36.859585"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 23ms (Views: 0.2ms | ActiveRecord: 4.0ms)
+
+
+Started POST "/api/person/update_valuation?id=8&valuation=50" for ::1 at 2015-04-20 02:17:41 -0400
+Processing by PersonController#update_valuation as HTML
+  Parameters: {"id"=>"8", "valuation"=>"50"}
+  [1m[35mPerson Load (0.9ms)[0m  SELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT 1  [["id", 8]]
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  UPDATE "people" SET "valuation" = $1, "updated_at" = $2 WHERE "people"."id" = $3  [["valuation", 50.0], ["updated_at", "2015-04-20 06:17:41.175816"], ["id", 8]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 15ms (Views: 0.2ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 02:18:30 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (18.0ms)
+Completed 200 OK in 81ms (Views: 79.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/api/person/create?email=dcui@college.harvard.edu&name=Dennis&treatment=0" for ::1 at 2015-04-20 02:18:37 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"dcui@college.harvard.edu", "name"=>"Dennis", "treatment"=>"0"}
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "people" ("name", "email", "treatment", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Dennis"], ["email", "dcui@college.harvard.edu"], ["treatment", "f"], ["created_at", "2015-04-20 06:18:37.148641"], ["updated_at", "2015-04-20 06:18:37.148641"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Completed 200 OK in 11ms (Views: 0.1ms | ActiveRecord: 0.9ms)
+
+
+Started POST "/api/answer/create?answer=Because+he%27s+a+fish&end_time=2015-04-20T02:18:39-04:00&person_id=9&question_id=0&start_time=2015-04-20T02:18:37-04:00" for ::1 at 2015-04-20 02:18:39 -0400
+Processing by AnswerController#create as HTML
+  Parameters: {"answer"=>"Because he's a fish", "end_time"=>"2015-04-20T02:18:39-04:00", "person_id"=>"9", "question_id"=>"0", "start_time"=>"2015-04-20T02:18:37-04:00"}
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "answers" ("person_id", "question_id", "answer", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["person_id", 9], ["question_id", 0], ["answer", "Because he's a fish"], ["start_time", "2015-04-20 06:18:37.000000"], ["end_time", "2015-04-20 06:18:39.000000"], ["created_at", "2015-04-20 06:18:39.426005"], ["updated_at", "2015-04-20 06:18:39.426005"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 5ms (Views: 0.1ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/api/person/update_valuation?id=9&valuation=50" for ::1 at 2015-04-20 02:18:45 -0400
+Processing by PersonController#update_valuation as HTML
+  Parameters: {"id"=>"9", "valuation"=>"50"}
+  [1m[35mPerson Load (0.9ms)[0m  SELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT 1  [["id", 9]]
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  UPDATE "people" SET "valuation" = $1, "updated_at" = $2 WHERE "people"."id" = $3  [["valuation", 50.0], ["updated_at", "2015-04-20 06:18:45.970941"], ["id", 9]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 6ms (Views: 0.1ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 02:19:11 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (14.1ms)
+Completed 200 OK in 73ms (Views: 72.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/api/person/create?email=mschorow@college.harvard.edu&name=Marcus&treatment=0" for ::1 at 2015-04-20 02:19:20 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"mschorow@college.harvard.edu", "name"=>"Marcus", "treatment"=>"0"}
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "people" ("name", "email", "treatment", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Marcus"], ["email", "mschorow@college.harvard.edu"], ["treatment", "f"], ["created_at", "2015-04-20 06:19:20.518115"], ["updated_at", "2015-04-20 06:19:20.518115"]]
+  [1m[35m (2.3ms)[0m  COMMIT
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 2.7ms)
+
+
+Started POST "/api/answer/create?answer=I%27m+not+sure.&end_time=2015-04-20T02:19:25-04:00&person_id=10&question_id=0&start_time=2015-04-20T02:19:20-04:00" for ::1 at 2015-04-20 02:19:25 -0400
+Processing by AnswerController#create as HTML
+  Parameters: {"answer"=>"I'm not sure.", "end_time"=>"2015-04-20T02:19:25-04:00", "person_id"=>"10", "question_id"=>"0", "start_time"=>"2015-04-20T02:19:20-04:00"}
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "answers" ("person_id", "question_id", "answer", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["person_id", 10], ["question_id", 0], ["answer", "I'm not sure."], ["start_time", "2015-04-20 06:19:20.000000"], ["end_time", "2015-04-20 06:19:25.000000"], ["created_at", "2015-04-20 06:19:25.190184"], ["updated_at", "2015-04-20 06:19:25.190184"]]
+  [1m[36m (2.4ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 2.8ms)
+
+
+Started POST "/api/person/update_valuation?id=10&valuation=50" for ::1 at 2015-04-20 02:19:29 -0400
+Processing by PersonController#update_valuation as HTML
+  Parameters: {"id"=>"10", "valuation"=>"50"}
+  [1m[35mPerson Load (0.4ms)[0m  SELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT 1  [["id", 10]]
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  UPDATE "people" SET "valuation" = $1, "updated_at" = $2 WHERE "people"."id" = $3  [["valuation", 50.0], ["updated_at", "2015-04-20 06:19:29.132253"], ["id", 10]]
+  [1m[36m (2.3ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 3.1ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 02:19:30 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (7.0ms)
+Completed 200 OK in 56ms (Views: 55.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/api/person/create?email=d&name=d&treatment=0" for ::1 at 2015-04-20 02:19:34 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"d", "name"=>"d", "treatment"=>"0"}
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "people" ("name", "email", "treatment", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "d"], ["email", "d"], ["treatment", "f"], ["created_at", "2015-04-20 06:19:34.365511"], ["updated_at", "2015-04-20 06:19:34.365511"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/" for ::1 at 2015-04-20 02:19:39 -0400
+Processing by ApplicationController#index as HTML
+  Rendered application/index.html.erb within layouts/application (11.6ms)
+Completed 200 OK in 60ms (Views: 59.8ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/api/person/create?email=f&name=f&treatment=1" for ::1 at 2015-04-20 02:19:42 -0400
+Processing by PersonController#create as HTML
+  Parameters: {"email"=>"f", "name"=>"f", "treatment"=>"1"}
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "people" ("name", "email", "treatment", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["name", "f"], ["email", "f"], ["treatment", "t"], ["created_at", "2015-04-20 06:19:42.630607"], ["updated_at", "2015-04-20 06:19:42.630607"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 4ms (Views: 0.1ms | ActiveRecord: 0.9ms)
+
+
+Started POST "/api/answer/create?answer=I%27m+not+sure.&end_time=2015-04-20T02:19:54-04:00&person_id=12&question_id=0&start_time=2015-04-20T02:19:52-04:00" for ::1 at 2015-04-20 02:19:54 -0400
+Processing by AnswerController#create as HTML
+  Parameters: {"answer"=>"I'm not sure.", "end_time"=>"2015-04-20T02:19:54-04:00", "person_id"=>"12", "question_id"=>"0", "start_time"=>"2015-04-20T02:19:52-04:00"}
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "answers" ("person_id", "question_id", "answer", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["person_id", 12], ["question_id", 0], ["answer", "I'm not sure."], ["start_time", "2015-04-20 06:19:52.000000"], ["end_time", "2015-04-20 06:19:54.000000"], ["created_at", "2015-04-20 06:19:54.822558"], ["updated_at", "2015-04-20 06:19:54.822558"]]
+  [1m[35m (2.4ms)[0m  COMMIT
+Completed 200 OK in 8ms (Views: 0.2ms | ActiveRecord: 3.1ms)
+
+
+Started POST "/api/person/update_valuation?id=12&valuation=5" for ::1 at 2015-04-20 02:20:01 -0400
+Processing by PersonController#update_valuation as HTML
+  Parameters: {"id"=>"12", "valuation"=>"5"}
+  [1m[36mPerson Load (0.3ms)[0m  [1mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mUPDATE "people" SET "valuation" = $1, "updated_at" = $2 WHERE "people"."id" = $3[0m  [["valuation", 5.0], ["updated_at", "2015-04-20 06:20:01.115319"], ["id", 12]]
+  [1m[35m (2.5ms)[0m  COMMIT
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 3.2ms)

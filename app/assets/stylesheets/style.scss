@@ -170,5 +170,17 @@
       transform: translateX(-50%);
       bottom: 10%;
     }
+
+    .warning {
+      position: absolute;
+
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 5%;
+
+      color: red;
+      font-size: 8px;
+      font-weight: bold;
+    }
   }
 }

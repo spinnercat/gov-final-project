@@ -3,7 +3,7 @@
  */
 var app = angular.module('MainApp', ['ngRoute']);
 
-app.controller('SurveyCtrl', ['$scope', '$timeout', function($scope, $timeout) {
+app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
     // Questions should have the format
     // {
     //   question: String statement or question to be asked,
@@ -53,7 +53,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', function($scope, $timeout) {
 
     $scope.questionMode = $scope.MULTIPLE_CHOICE;
 
-    $scope.questionNum = -2;
+    $scope.questionNum = 0;
     $scope.curQ = null;
     $scope.questionStart = null;
     $scope.questionEnd = null;
@@ -65,77 +65,135 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', function($scope, $timeout) {
     $scope.warningTime = 3000;
     $scope.warning = "";
 
+    // Person info
+    $scope.personId = null;
+
     $scope.setAnswer = function(answer) {
         $scope.curAnswer = answer;
     }
 
     $scope.onNextClicked = function() {
-        if($scope.questionNum == -2) {
-            // Should we validate name and email?
-            if($scope.formData.name.length === 0 || $scope.formData.email.length === 0) {
-                showWarning("Please enter a valid name/email.");
-                return;
-            }
+        if($scope.surveyMode === $scope.ENTER_INFO) {
+            validateInfo();
+        } else if($scope.surveyMode === $scope.WAIT) {
 
-            // Assign control and treatment
-            if(Math.random() < 0.5) {
-                $scope.formData.treatment = 0;
-            } else {
-                $scope.formData.treatment = 1;
-            }
+        } else if($scope.surveyMode === $scope.ANSWER_QUESTIONS) {
+            validateAnswer();
 
-            if(!$scope.formData.treatment) {
-                // Immediately start giving questions
-                $scope.questionNum += 1;
+            if($scope.questionNum >= $scope.questions.length) {
+                $scope.surveyMode = $scope.REWARD_MODE;
             }
-        } else if($scope.questionNum >= 0 && $scope.questionNum < $scope.questions.length) {
-            if(!$scope.formData.answers[$scope.questionNum].answer) {
-                showWarning("Please answer the question! :)");
-                return;
-            }
+        } else if($scope.surveyMode === $scope.REWARD_MODE) {
+            validateReward();
+        }
+    }
 
-            $scope.questionEnd = moment().format();
-            $scope.formData.answers[$scope.questionNum].endTime = $scope.questionEnd;
-            $scope.formData.answers[$scope.questionNum].startTime = $scope.questionStart;
+    function validateInfo() {
+        // Should we validate name and email?
+        if($scope.formData.name.length === 0 || $scope.formData.email.length === 0) {
+            showWarning("Please enter a valid name/email.");
+            return;
         }
 
-        $scope.questionNum += 1;
+        // Assign control and treatment
+        if(Math.random() < 0.5) {
+            $scope.formData.treatment = 0;
+        } else {
+            $scope.formData.treatment = 1;
+        }
 
-        // Set the survey mode
-        if($scope.questionNum >= 0) {
-            if($scope.questionNum == $scope.questions.length) {
-                $scope.surveyMode = $scope.REWARD_MODE;
-            } else if($scope.questionNum > $scope.questions.length) {
-                $scope.surveyMode = $scope.DONE;
+        // Store the user
+        $http({
+            url: '/api/person/create',
+            method: 'POST',
+            params: {
+                name: $scope.formData.name,
+                email: $scope.formData.email,
+                treatment: $scope.formData.treatment
+            }
+        }).success(function(data) {
+            $scope.personId = data.id;
+
+            if($scope.formData.treatment) {
+                // Make the person wait
+                $scope.surveyMode = $scope.WAIT;
+
+                $timeout(function() {
+                    $scope.surveyMode = $scope.ANSWER_QUESTIONS;
+                    setQuestion();
+                }, $scope.waitTime);
             } else {
                 $scope.surveyMode = $scope.ANSWER_QUESTIONS;
+                setQuestion();
+            }
+        });
+    }
+
+    function validateAnswer() {
+        if(!$scope.formData.answers[$scope.questionNum].answer) {
+            showWarning("Please answer the question! :)");
+            return;
+        }
+
+        $scope.questionEnd = moment().format();
+        $scope.formData.answers[$scope.questionNum].endTime = $scope.questionEnd;
+        $scope.formData.answers[$scope.questionNum].startTime = $scope.questionStart;
+
+        // Store the answer
+        $http({
+            url: '/api/answer/create',
+            method: 'POST',
+            params: {
+                person_id: $scope.personId,
+                question_id: $scope.questionNum,
+                answer: $scope.formData.answers[$scope.questionNum].answer,
+                start_time: $scope.formData.answers[$scope.questionNum].startTime,
+                end_time: $scope.formData.answers[$scope.questionNum].endTime
+            }
+        });
+
+        $scope.questionNum += 1;
+        setQuestion();
+    }
+
+    function validateReward() {
+        if(!$scope.formData.rewardValue) {
+            showWarning("Please input a valid number!");
+            return;
+        }
+
+        // Update the valuation
+        $http({
+            url: '/api/person/update_valuation',
+            method: 'POST',
+            params: {
+                id: $scope.personId,
+                valuation: $scope.formData.rewardValue
+            }
+        });
+
+        $scope.surveyMode = $scope.DONE;
+    }
+
+    function setQuestion() {
+        if($scope.questionNum < $scope.questions.length) {
+            $scope.curQ = $scope.questions[$scope.questionNum];
+            var type = $scope.curQ.type;
+
+            if(type === 'multiple-choice') {
+                $scope.questionMode = $scope.MULTIPLE_CHOICE;
+            } else if(type === 'agree') {
+                $scope.questionMode = $scope.AGREE;
+            } else if(type === 'short-answer') {
+                $scope.questionMode = $scope.SHORT_ANSWER;
+            } else {
+                alert('MARCUS YOU FUCKED UP!');
             }
 
-            if($scope.surveyMode == $scope.ANSWER_QUESTIONS) {
-                $scope.curQ = $scope.questions[$scope.questionNum];
-                var type = $scope.curQ.type;
-
-                if(type === 'multiple-choice') {
-                    $scope.questionMode = $scope.MULTIPLE_CHOICE;
-                } else if(type === 'agree') {
-                    $scope.questionMode = $scope.AGREE;
-                } else if(type === 'short-answer') {
-                    $scope.questionMode = $scope.SHORT_ANSWER;
-                } else {
-                    alert('MARCUS YOU FUCKED UP!');
-                }
-
-                $scope.curAnswer = null;
-                $scope.answers = shuffleArray($scope.curQ.answers);
-                $scope.questionStart = moment().format();
-                $scope.questionText = $scope.curQ.question;
-            }
-        } else if($scope.questionNum == -1) {
-            $scope.surveyMode = $scope.WAIT;
-
-            $timeout(function() {
-                $scope.onNextClicked();
-            }, $scope.waitTime);
+            $scope.curAnswer = null;
+            $scope.answers = shuffleArray($scope.curQ.answers);
+            $scope.questionStart = moment().format();
+            $scope.questionText = $scope.curQ.question;
         }
     }
 
