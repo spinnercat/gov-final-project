@@ -7,14 +7,14 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
     // Questions should have the format
     // {
     //   question: String statement or question to be asked,
-    //   type: One of ['multiple-choice', 'agree', 'short-answer'],
+    //   type: One of ['multiple-choice', 'info', 'short-answer'],
     //   answers: List of answers in plain text,
     //   shuffle: true/false
     // }
     $scope.questions = [
         {
             question: 'How do you view US welfare spending?',
-            type: 'multiple-choice',
+            type: 'short-answer',
             answers: [
                 'Too much.',
                 'Just right.',
@@ -24,7 +24,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
         },
         {
             question: 'How much would you agree with the following statement: Many people who receive welfare do little to improve their own condition.',
-            type: 'multiple-choice',
+            type: 'info',
             answers: [
                 'Strongly Disagree',
                 'Disagree',
@@ -62,7 +62,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
 
     // Question types
     $scope.MULTIPLE_CHOICE = 1;
-    $scope.AGREE = 2;
+    $scope.INFO = 2;
     $scope.SHORT_ANSWER = 3;
 
     $scope.questionMode = $scope.MULTIPLE_CHOICE;
@@ -144,6 +144,12 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
     }
 
     function validateAnswer() {
+        if($scope.questionMode === $scope.INFO) {
+            $scope.questionNum += 1;
+            setQuestion();
+            return;
+        }
+
         if(!$scope.formData.answers[$scope.questionNum].answer) {
             showWarning("Please answer the question! :)");
             return;
@@ -196,8 +202,8 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
 
             if(type === 'multiple-choice') {
                 $scope.questionMode = $scope.MULTIPLE_CHOICE;
-            } else if(type === 'agree') {
-                $scope.questionMode = $scope.AGREE;
+            } else if(type === 'info') {
+                $scope.questionMode = $scope.INFO;
             } else if(type === 'short-answer') {
                 $scope.questionMode = $scope.SHORT_ANSWER;
             } else {

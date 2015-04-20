@@ -37,6 +37,16 @@
     <button class="continue-button" type="button" ng-click="onNextClicked();">Continue</button>
     <label class="warning">{{ warning }}</label>
   </div>
+  <div class="info" ng-show="surveyMode === ANSWER_QUESTIONS && questionMode === INFO">
+    <label class="question-text">{{ questionText }}</label>
+    <button class="continue-button" type="button" ng-click="onNextClicked();">Continue</button>
+  </div>
+  <div class="short-answer" ng-show="surveyMode === ANSWER_QUESTIONS && questionMode === SHORT_ANSWER">
+    <label class="question-text">{{ (questionNum + 1) + '. ' + questionText }}</label>
+    <input type="text" class="form-control" name="answer" ng-model="formData.answers[questionNum].answer">
+    <button class="continue-button" type="button" ng-click="onNextClicked();">Continue</button>
+    <label class="warning">{{ warning }}</label>
+  </div>
   <div class="survey-done" ng-show="surveyMode === DONE">
     <h1>Thanks for taking our survey! Your response has been recorded.</h1>
   </div>
