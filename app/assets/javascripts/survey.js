@@ -8,17 +8,31 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
     // {
     //   question: String statement or question to be asked,
     //   type: One of ['multiple-choice', 'agree', 'short-answer'],
-    //   answers: List of answers in plain text
+    //   answers: List of answers in plain text,
+    //   shuffle: true/false
     // }
     $scope.questions = [
         {
-            question: 'Why is Albert a noob?',
+            question: 'How do you view US welfare spending?',
             type: 'multiple-choice',
             answers: [
-                'Just because.',
-                "Because he's a fish",
-                "I'm not sure."
-            ]
+                'Too much.',
+                'Just right.',
+                'Too little.',
+            ],
+            shuffle: false
+        },
+        {
+            question: 'How much would you agree with the following statement: Many people who receive welfare do little to improve their own condition.',
+            type: 'multiple-choice',
+            answers: [
+                'Strongly Disagree',
+                'Disagree',
+                'Neutral',
+                'Agree',
+                'Strongly Agree'
+            ],
+            shuffle: false
         }
     ];
 
@@ -191,7 +205,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             }
 
             $scope.curAnswer = null;
-            $scope.answers = shuffleArray($scope.curQ.answers);
+            $scope.answers = $scope.curQ.shuffle ? shuffleArray($scope.curQ.answers) : $scope.curQ.answers
             $scope.questionStart = moment().format();
             $scope.questionText = $scope.curQ.question;
         }
