@@ -59,7 +59,7 @@
     }
   }
 
-  .survey-done {
+  .survey-done, .wait {
     position: absolute;
 
     left: 25%;
@@ -81,6 +81,85 @@
     }
   }
 
+  .info {
+    position: absolute;
+
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+    width: 50%;
+    height: 50%;
+
+    border: 1px solid;
+    border-color: black;
+
+    display: table;
+
+    label {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    button {
+      position: absolute;
+
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 10%;
+    }
+  }
+
+  .short-answer {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+
+    border: 1px solid;
+    border-color: black;
+
+    .question-text {
+      margin-top: 10%;
+      margin-left: auto;
+      margin-right: auto;
+
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    input {
+      margin-top: 5%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .continue-button {
+      position: absolute;
+
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 10%;
+    }
+
+    .warning {
+      position: absolute;
+
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 5%;
+
+      color: red;
+      font-size: 8px;
+      font-weight: bold;
+    }
+  }
   .multiple-choice {
     display: flex;
     flex-direction: column;

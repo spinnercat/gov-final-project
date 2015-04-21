@@ -1,13 +1,13 @@
 /**
  * Created by denniscui on 4/17/15.
  */
-var app = angular.module('MainApp', ['ngRoute']);
+var app = angular.module('MainApp', ['ngRoute', 'ngSanitize']);
 
 app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
     // Questions should have the format
     // {
     //   question: String statement or question to be asked,
-    //   type: One of ['multiple-choice', 'short-answer'],
+    //   type: One of ['multiple-choice', 'info', 'short-answer'],
     //   answers: List of answers in plain text,
     //   shuffle: true/false
     // }
@@ -229,14 +229,18 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
     $scope.ANSWER_QUESTIONS = 3;
     $scope.DONE = 4;
     $scope.REWARD_MODE = 5;
+    $scope.QUESTION_DELAY = 6;
 
+    // Wait time is at beginning
     $scope.waitTime = 10000;
+    // Question wait time is inbetween questions
+    $scope.questionWaitTime = 2000;
 
     $scope.surveyMode = 2;
 
     // Question types
     $scope.MULTIPLE_CHOICE = 1;
-    $scope.AGREE = 2;
+    $scope.INFO = 2;
     $scope.SHORT_ANSWER = 3;
 
     $scope.questionMode = $scope.MULTIPLE_CHOICE;
@@ -318,6 +322,12 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
     }
 
     function validateAnswer() {
+        if($scope.questionMode === $scope.INFO) {
+            $scope.questionNum += 1;
+            setQuestion();
+            return;
+        }
+
         if(!$scope.formData.answers[$scope.questionNum].answer) {
             showWarning("Please answer the question! :)");
             return;
@@ -340,8 +350,19 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             }
         });
 
-        $scope.questionNum += 1;
-        setQuestion();
+        // Check if there is a question delay
+        if($scope.curQ.noDelay) {
+            $scope.questionNum += 1;
+            setQuestion();
+        } else {
+            $scope.surveyMode = $scope.QUESTION_DELAY;
+
+            $timeout(function() {
+                $scope.surveyMode = $scope.ANSWER_QUESTIONS;
+                $scope.questionNum += 1;
+                setQuestion();
+            }, $scope.questionWaitTime)
+        }
     }
 
     function validateReward() {
@@ -370,8 +391,8 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
 
             if(type === 'multiple-choice') {
                 $scope.questionMode = $scope.MULTIPLE_CHOICE;
-            } else if(type === 'agree') {
-                $scope.questionMode = $scope.AGREE;
+            } else if(type === 'info') {
+                $scope.questionMode = $scope.INFO;
             } else if(type === 'short-answer') {
                 $scope.questionMode = $scope.SHORT_ANSWER;
             } else {
