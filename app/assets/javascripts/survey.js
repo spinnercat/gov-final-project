@@ -295,30 +295,19 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             return;
         }
 
-        // Assign control and treatment
-        if(Math.random() < 0.5) {
-            $scope.formData.treatment = 0;
-        } else {
-            $scope.formData.treatment = 1;
-        }
-
-        if ($scope.formData.email == "treatment") {
-            $scope.formData.treatment = 1;
-        } else if ($scope.formData.email == "control") {
-            $scope.formData.treatment = 0;
-        }
-
         // Store the user
         $http({
-            url: '/api/person/create',
+            url: '/api/person/find_or_create',
             method: 'POST',
             params: {
                 name: $scope.formData.name,
-                email: $scope.formData.email,
-                treatment: $scope.formData.treatment
+                email: $scope.formData.email
             }
         }).success(function(data) {
-            $scope.personId = data.id;
+            $scope.personId = data.person.id;
+
+            // Assign control and treatment
+            $scope.formData.treatment = data.person.treatment;
 
             if($scope.formData.treatment) {
                 // Make the person wait

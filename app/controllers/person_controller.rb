@@ -1,15 +1,15 @@
 class PersonController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
-  def create
-    person = Person.new
+  def find_or_create
+    person = Person.find_or_create_by(email: params['email'])
     person.name = params['name']
-    person.email = params['email']
-    person.treatment = params['treatment']
-    person.valuation = params['valuation']
+    if person.treatment.nil?
+      person.treatment = rand(2)
+    end
     person.save!
 
-    render json: { success: true, id: person.id }
+    render json: { success: true, person: person }
   rescue StandardError => e
     render json: { success: false }
   end

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   scope 'api/person', module: 'person', as: 'person' do
-    post 'create', action: 'create'
+    post 'find_or_create', action: 'find_or_create'
     post 'update_valuation', action: 'update_valuation'
   end
 
