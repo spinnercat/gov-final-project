@@ -7,30 +7,30 @@
 
     left: 25%;
     right: 25%;
-    top: 25%;
-    bottom: 25%;
+    top: 20%;
+    bottom: 20%;
 
     border: 1px solid;
     border-color: black;
 
     .title {
-      margin-top: 10%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .form {
       margin-top: 5%;
       margin-left: auto;
       margin-right: auto;
     }
 
-    .continue-button {
-      position: absolute;
+    .form {
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 10%;
+    .continue-button {
+      margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
+
+      padding-left: 10%;
+      padding-right: 10%;
     }
 
     .warning {
@@ -46,7 +46,6 @@
     }
 
     .msg {
-      margin-top: 10px;
       margin-left: auto;
       margin-right: auto;
 
@@ -64,8 +63,8 @@
 
     left: 25%;
     right: 25%;
-    top: 25%;
-    bottom: 25%;
+    top: 20%;
+    bottom: 20%;
     width: 50%;
     height: 50%;
 
@@ -74,10 +73,17 @@
 
     display: table;
 
-    h1 {
+    h4 {
       display: table-cell;
       vertical-align: middle;
       text-align: center;
+    }
+
+    .spinner {
+      position:absolute;
+      left: 47%;
+      right: 47%;
+      bottom: 15%;
     }
   }
 
@@ -86,8 +92,8 @@
 
     left: 25%;
     right: 25%;
-    top: 25%;
-    bottom: 25%;
+    top: 20%;
+    bottom: 20%;
     width: 50%;
     height: 50%;
 
@@ -119,25 +125,26 @@
 
     left: 25%;
     right: 25%;
-    top: 25%;
-    bottom: 25%;
+    top: 20%;
+    bottom: 20%;
 
     border: 1px solid;
     border-color: black;
 
     .question-text {
       margin-top: 10%;
-      margin-left: auto;
-      margin-right: auto;
+      margin-left: 10%;
+      margin-right: 10%;
 
-      font-size: 20px;
+      font-size: 17px;
       font-weight: bold;
     }
 
     input {
       margin-top: 5%;
-      margin-left: auto;
-      margin-right: auto;
+      margin-left: 10%;
+      margin-right: 10%;
+      width: 80%;
     }
 
     .continue-button {
@@ -168,26 +175,32 @@
 
     left: 25%;
     right: 25%;
-    top: 25%;
-    bottom: 25%;
+    top: 20%;
+    bottom: 20%;
 
     border: 1px solid;
     border-color: black;
 
     .question-text {
       margin-top: 10%;
-      margin-left: auto;
-      margin-right: auto;
+      margin-left: 10%;
+      margin-right: 10%;
 
-      font-size: 20px;
+      font-size: 17px;
       font-weight: bold;
     }
 
     .question-answer {
       margin-top: 5%;
-      margin-left: auto;
-      margin-right: auto;
+      margin-left: 10%;
+      margin-right: 10%;
+
+      input {
+        margin-right: 10px
+      }
     }
+
+
 
     .continue-button {
       position: absolute;
@@ -218,8 +231,8 @@
 
     left: 25%;
     right: 25%;
-    top: 25%;
-    bottom: 25%;
+    top: 20%;
+    bottom: 20%;
 
     border: 1px solid;
     border-color: black;
@@ -238,8 +251,9 @@
 
     input {
       margin-top: 5%;
-      margin-left: auto;
-      margin-right: auto;
+      margin-left: 10%;
+      margin-right: 10%;
+      width: 80%;
     }
 
     button {

@@ -14,25 +14,27 @@
   <!-- NAME INPUT -->
   <div class="enter-info" ng-show="surveyMode === ENTER_INFO">
     <h1 class="title">Marcus and Dennis' Gov 1372 Survey</h1>
+
     <form class="form">
       <label>Name:</label>
       <input type="text" class="form-control" name="name" ng-model="formData.name">
-      </br>
-      </br>
+      <br>
       <label>Email:</label>
       <input type="text" class="form-control" name="email" ng-model="formData.email">
       </br>
     </form>
     <label class="msg">Your personal information will remain anonymous and confidential. We will only
-      use your personal information to enter you into a raffle for a free Amazon gift card.</label>
+      use your personal information to enter you into our drawing for a free Amazon gift card.</label>
     <button class="continue-button" type="button" ng-click="onNextClicked();">Continue</button>
     <label class="warning">{{ warning }}</label>
   </div>
   <div class="multiple-choice" ng-show="surveyMode === ANSWER_QUESTIONS && questionMode === MULTIPLE_CHOICE">
     <label class="question-text" ng-bind-html="questionText"></label>
+
     <div class="question-answer">
       <div ng-repeat="answer in answers">
-        <input type="radio" name="answerChoices" ng-model="formData.answers[questionNum].answer" value="{{answer}}">{{ answer }}
+        <input type="radio" name="answerChoices" ng-model="formData.answers[questionNum].answer" value="{{answer}}">{{
+        answer }}
       </div>
     </div>
     <button class="continue-button" type="button" ng-click="onNextClicked();">Continue</button>
@@ -49,16 +51,28 @@
     <label class="warning">{{ warning }}</label>
   </div>
   <div class="survey-done" ng-show="surveyMode === DONE">
-    <h1>Thanks for taking our survey! Your response has been recorded.</h1>
+    <h4>Thanks for taking our survey! Your response has been recorded. Feel free to contact us at
+      dcui@college.harvard.edu if you have any questions or concerns.</h4>
   </div>
   <div class="wait" ng-show="surveyMode === WAIT">
-    <h1>Loading survey questions (may take up to 5 minutes)...</h1>
+    <div>
+      <h4>Loading survey questions (may take up to 5 minutes)...</h4>
+    </div>
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped active" id="progress" role="progressbar"
+           aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+      </div>
+    </div>
   </div>
   <div class="wait" ng-show="surveyMode === QUESTION_DELAY">
-    <h1>Please wait, rendering next survey question.</h1>
+    <h4>Please wait, rendering next survey question.</h4>
+    <div class="spinner">
+      Loading...
+    </div>
   </div>
   <div class="reward-value" ng-show="surveyMode === REWARD_MODE">
-    <label>What do you think the fair value of the reward (an Amazon gift card) should be?</label>
+    <label>For the drawing to win an Amazon gift card, what do you believe would be the fair amount of money to put on
+      the card to give the winner?</label>
     <input type="number" class="form-control" name="rewardValue" ng-model="formData.rewardValue" placeholder="Enter dollar value">
     <button class="continue-button" type="button" ng-click="onNextClicked();">Submit</button>
     <label class="warning">{{ warning }}</label>

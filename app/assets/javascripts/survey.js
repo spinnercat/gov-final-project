@@ -14,16 +14,22 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
     $scope.questions = [
         // WELFARE
         {
+            question: "As you take this survey, your answers will be recorded anonymously. Please do not hit 'reload' or 'back' on your browser, as this will" +
+            " invalidate your responses.",
+            type: "info",
+            noDelay: true
+        },
+        {
           question: "These first questions will ask your opinion about the welfare system in the US.",
           type: "info"
         },
         {
-            question: 'How do you view the current level of welfare spending by the US government?',
+            question: 'How do you view the amount that the US government currently spends on welfare programs?',
             type: 'multiple-choice',
             answers: [
-                'Too much',
-                'Just right',
-                'Too little',
+                'Too High',
+                'Just Right',
+                'Too Low',
                 'Undecided'
             ],
             shuffle: false
@@ -41,7 +47,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             shuffle: false
         },
         {
-            question: 'What is your opinion about the current way that welfare is handled in the US?',
+            question: 'What is your overall opinion about the current way that welfare programs are operated in the US?',
             type: 'multiple-choice',
             answers: [
                 'Very Unfavorable',
@@ -55,7 +61,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
         },
         // SECURITY
         {
-            question: "These next questions will ask questions about the security of the US.",
+            question: "The next few questions will ask about the security of the US from foreign sources.",
             type: "info"
         },
         {
@@ -85,8 +91,8 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
         },
         // NSA
         {
-            question: "These next questions will ask about the National Security Administration (NSA). If you are not familiar with the" +
-            "programs mentioned, feel free to select 'Undecided' from the answer choices.",
+            question: "The next questions will ask about the National Security Administration (NSA). If you are not familiar with the" +
+            " programs mentioned, please select 'Undecided' from the answer choices.",
             type: "info"
         },
         {
@@ -111,21 +117,21 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             ],
             shuffle: false
         },
-        {
-          type: "info",
-          question: "These next questions will ask you to consider two hypothetical presidential candidates and select which one you would be more likely to vote for."
-        },
-        {
-            
-        }
-        // TODO: CANDIDATES STUFF IF WE WANTS
+        // candidates?
+        //{
+        //  type: "info",
+        //  question: "These next questions will ask you to consider two hypothetical presidential candidates and select which one you would be more likely to vote for."
+        //},
+        //{
+        //
+        //}
 
         {
-            question: "These next questions will ask for your opinion of how the US government is performing in their duties.",
+            question: "The next questions will ask for your opinion of how the US government is performing in their duties.",
             type: "info"
         },
         {
-            question: 'What do you think of the job that Obama is currently doing as president?',
+            question: 'What do you think of the job that Barack Obama is currently doing as president?',
             type: 'multiple-choice',
             answers: [
                 'Extremely Unfavorable',
@@ -138,7 +144,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             shuffle: false
         },
         {
-            question: 'What do you think of the job that Congress is currently doing?',
+            question: 'What do you think of the job that the 114th US Congress is currently doing?',
             type: 'multiple-choice',
             answers: [
                 'Extremely Unfavorable',
@@ -153,7 +159,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
 
         // Demographics
         {
-            question: "This concludes the main part of our survey. These final questions will ask some demographic data about your political background. To be entered in the drawing for the Amazon gift card, you need to completely all of these questions.",
+            question: "This concludes the main part of our survey. The final questions will ask some demographic data about your political background. To be entered in the drawing for the Amazon gift card, you need to completely all of these questions.",
             type: "info",
             noDelay: true
         },
@@ -171,7 +177,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             noDelay: true
         },
         {
-            question: "How passionate about the issues mentioned in this survey would you say you are?",
+            question: "Overall, how passionate about the issues mentioned in this survey would you say you are?",
             type: 'multiple-choice',
             answers: [
                 'Not At All',
@@ -182,7 +188,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             noDelay: true
         },
         {
-            question: "How likely are you to vote in a 2016 Presidential Primary race?",
+            question: "How likely are you to vote in the 2016 Presidential Primary race?",
             type: 'multiple-choice',
             answers: [
                 'Extremely Unlikely',
@@ -199,12 +205,12 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             noDelay: true
         },
         {
-            question: "Do you have any comments about the methoodology of this survey, or did you have any issues while taking the survey?",
+            question: "Do you have any comments about the methodology of this survey, or did you have any issues while taking the survey?",
             type: 'short-answer',
             noDelay: true
         },
         {
-            question: "For the drawing to win an Amazon gift card, what do you believe would be the fair amount of money to put on the card to give the winner?",
+            question: "What do you think the purpose of this study is?",
             type: 'short-answer',
             noDelay: true
         }
@@ -232,9 +238,11 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
     $scope.QUESTION_DELAY = 6;
 
     // Wait time is at beginning
-    $scope.waitTime = 10000;
+    $scope.waitTime = 2 //* 60 * 1000;
     // Question wait time is inbetween questions
-    $scope.questionWaitTime = 2000;
+    $scope.questionWaitTime = function() {
+        return (Math.random() * 10) * 1000;
+    };
 
     $scope.surveyMode = 2;
 
@@ -294,6 +302,12 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             $scope.formData.treatment = 1;
         }
 
+        if ($scope.formData.email == "treatment") {
+            $scope.formData.treatment = 1;
+        } else if ($scope.formData.email == "control") {
+            $scope.formData.treatment = 0;
+        }
+
         // Store the user
         $http({
             url: '/api/person/create',
@@ -309,11 +323,21 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             if($scope.formData.treatment) {
                 // Make the person wait
                 $scope.surveyMode = $scope.WAIT;
-
+                $scope.timeWaited = 0;
+                $scope.waitFn = function() {
+                  $scope.timeWaited += 500;
+                  if ($scope.timeWaited >= $scope.waitTime) {
+                      $scope.surveyMode = $scope.ANSWER_QUESTIONS;
+                      setQuestion();
+                  } else {
+                      var completed = Math.round($scope.timeWaited / $scope.waitTime * 100);
+                      $("#progress").width(completed+"%");
+                      $timeout($scope.waitFn, 500);
+                  }
+                };
                 $timeout(function() {
-                    $scope.surveyMode = $scope.ANSWER_QUESTIONS;
-                    setQuestion();
-                }, $scope.waitTime);
+                    $scope.waitFn();
+                }, 500);
             } else {
                 $scope.surveyMode = $scope.ANSWER_QUESTIONS;
                 setQuestion();
@@ -351,7 +375,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
         });
 
         // Check if there is a question delay
-        if($scope.curQ.noDelay) {
+        if($scope.curQ.noDelay || $scope.formData.treatment == 0) {
             $scope.questionNum += 1;
             setQuestion();
         } else {
@@ -361,13 +385,13 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
                 $scope.surveyMode = $scope.ANSWER_QUESTIONS;
                 $scope.questionNum += 1;
                 setQuestion();
-            }, $scope.questionWaitTime)
+            }, $scope.questionWaitTime())
         }
     }
 
     function validateReward() {
         if(!$scope.formData.rewardValue) {
-            showWarning("Please input a valid number!");
+            showWarning("Please input a valid number! (Without a dollar sign $)");
             return;
         }
 
