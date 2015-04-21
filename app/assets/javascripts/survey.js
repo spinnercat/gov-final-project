@@ -20,7 +20,8 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
                 'Just right.',
                 'Too little.',
             ],
-            shuffle: false
+            shuffle: false,
+            noDelay: false
         },
         {
             question: 'How much would you agree with the following statement: Many people who receive welfare do little to improve their own condition.',
@@ -32,7 +33,8 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
                 'Agree',
                 'Strongly Agree'
             ],
-            shuffle: false
+            shuffle: false,
+            noDelay: true
         }
     ];
 
@@ -55,8 +57,12 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
     $scope.ANSWER_QUESTIONS = 3;
     $scope.DONE = 4;
     $scope.REWARD_MODE = 5;
+    $scope.QUESTION_DELAY = 6;
 
+    // Wait time is at beginning
     $scope.waitTime = 10000;
+    // Question wait time is inbetween questions
+    $scope.questionWaitTime = 2000;
 
     $scope.surveyMode = 2;
 
@@ -172,8 +178,19 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
             }
         });
 
-        $scope.questionNum += 1;
-        setQuestion();
+        // Check if there is a question delay
+        if($scope.curQ.noDelay) {
+            $scope.questionNum += 1;
+            setQuestion();
+        } else {
+            $scope.surveyMode = $scope.QUESTION_DELAY;
+
+            $timeout(function() {
+                $scope.surveyMode = $scope.ANSWER_QUESTIONS;
+                $scope.questionNum += 1;
+                setQuestion();
+            }, $scope.questionWaitTime)
+        }
     }
 
     function validateReward() {

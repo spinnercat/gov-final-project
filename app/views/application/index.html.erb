@@ -53,6 +53,9 @@
   <div class="wait" ng-show="surveyMode === WAIT">
     <h1>Loading survey questions (may take up to 5 minutes)...</h1>
   </div>
+  <div class="wait" ng-show="surveyMode === QUESTION_DELAY">
+    <h1>Please wait, rendering next survey question.</h1>
+  </div>
   <div class="reward-value" ng-show="surveyMode === REWARD_MODE">
     <label>What do you think the fair value of the reward (an Amazon gift card) should be?</label>
     <input type="number" class="form-control" name="rewardValue" ng-model="formData.rewardValue" placeholder="Enter dollar value">
