@@ -1,7 +1,7 @@
 /**
  * Created by denniscui on 4/17/15.
  */
-var app = angular.module('MainApp', ['ngRoute']);
+var app = angular.module('MainApp', ['ngRoute', 'ngSanitize']);
 
 app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
     // Questions should have the format

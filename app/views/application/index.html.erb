@@ -4,6 +4,7 @@
   <title>Voting Tendencies Survey</title>
   <%= stylesheet_link_tag :style %>
   <%= javascript_include_tag :survey %>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.0/angular-sanitize.js"></script>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -28,7 +29,7 @@
     <label class="warning">{{ warning }}</label>
   </div>
   <div class="multiple-choice" ng-show="surveyMode === ANSWER_QUESTIONS && questionMode === MULTIPLE_CHOICE">
-    <label class="question-text">{{ (questionNum + 1) + '. ' + questionText }}</label>
+    <label class="question-text" ng-bind-html="questionText"></label>
     <div class="question-answer">
       <div ng-repeat="answer in answers">
         <input type="radio" name="answerChoices" ng-model="formData.answers[questionNum].answer" value="{{answer}}">{{ answer }}
@@ -38,11 +39,11 @@
     <label class="warning">{{ warning }}</label>
   </div>
   <div class="info" ng-show="surveyMode === ANSWER_QUESTIONS && questionMode === INFO">
-    <label class="question-text">{{ questionText }}</label>
+    <label class="question-text" ng-bind-html="questionText"></label>
     <button class="continue-button" type="button" ng-click="onNextClicked();">Continue</button>
   </div>
   <div class="short-answer" ng-show="surveyMode === ANSWER_QUESTIONS && questionMode === SHORT_ANSWER">
-    <label class="question-text">{{ (questionNum + 1) + '. ' + questionText }}</label>
+    <label class="question-text" ng-bind-html="questionText"></label>
     <input type="text" class="form-control" name="answer" ng-model="formData.answers[questionNum].answer">
     <button class="continue-button" type="button" ng-click="onNextClicked();">Continue</button>
     <label class="warning">{{ warning }}</label>
