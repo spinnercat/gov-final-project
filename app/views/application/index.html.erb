@@ -4,6 +4,7 @@
   <title>Voting Tendencies Survey</title>
   <%= stylesheet_link_tag :style %>
   <%= javascript_include_tag :survey %>
+  <%= favicon_link_tag 'favicon.ico' %>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.0/angular-sanitize.js"></script>
   <%= csrf_meta_tags %>
 </head>
@@ -13,7 +14,7 @@
 <div class="main-container" ng-controller="SurveyCtrl">
   <!-- NAME INPUT -->
   <div class="enter-info" ng-show="surveyMode === ENTER_INFO">
-    <h1 class="title">Marcus and Dennis' Gov 1372 Survey</h1>
+    <h1 class="title">Political Issues and Voting Behavior</h1>
 
     <form class="form">
       <label>Name:</label>

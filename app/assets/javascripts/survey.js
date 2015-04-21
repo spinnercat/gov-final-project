@@ -238,10 +238,10 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
     $scope.QUESTION_DELAY = 6;
 
     // Wait time is at beginning
-    $scope.waitTime = 2 //* 60 * 1000;
+    $scope.waitTime = 1.75 * 60 * 1000;
     // Question wait time is inbetween questions
     $scope.questionWaitTime = function() {
-        return (Math.random() * 10) * 1000;
+        return (1 + Math.random() * 9) * 1000;
     };
 
     $scope.surveyMode = 2;
@@ -325,14 +325,14 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
                 $scope.surveyMode = $scope.WAIT;
                 $scope.timeWaited = 0;
                 $scope.waitFn = function() {
-                  $scope.timeWaited += 500;
+                  $scope.timeWaited += 100;
                   if ($scope.timeWaited >= $scope.waitTime) {
                       $scope.surveyMode = $scope.ANSWER_QUESTIONS;
                       setQuestion();
                   } else {
                       var completed = Math.round($scope.timeWaited / $scope.waitTime * 100);
                       $("#progress").width(completed+"%");
-                      $timeout($scope.waitFn, 500);
+                      $timeout($scope.waitFn, 100);
                   }
                 };
                 $timeout(function() {
