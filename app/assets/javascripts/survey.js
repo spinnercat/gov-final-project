@@ -20,8 +20,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
                 'Just right.',
                 'Too little.',
             ],
-            shuffle: false,
-            noDelay: false
+            shuffle: false
         },
         {
             question: 'How much would you agree with the following statement: Many people who receive welfare do little to improve their own condition.',
@@ -33,8 +32,7 @@ app.controller('SurveyCtrl', ['$scope', '$timeout', '$http', function($scope, $t
                 'Agree',
                 'Strongly Agree'
             ],
-            shuffle: false,
-            noDelay: true
+            shuffle: false
         }
     ];
 
